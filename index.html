@@ -117,8 +117,6 @@ html { scrollbar-color: var(--ink) var(--paper); }
 .anno::before { content: ''; height: 1px; background: var(--ink); width: var(--len, 64px); order: var(--o, 0); }
 .anno b { font-weight: 500; color: var(--violet); }
 .anno--l { flex-direction: row-reverse; }
-.figcap { position: absolute; left: 0; bottom: 0; font: 400 12px/1.4 var(--mono); color: var(--ink-2); }
-.figcap b { color: var(--ink); font-weight: 500; }
 
 /* Facts strip */
 .facts { margin-top: clamp(32px, 4vw, 56px); border-top: 2px solid var(--rule); }
@@ -157,7 +155,6 @@ html { scrollbar-color: var(--ink) var(--paper); }
 /* Feature plates: a phone-shaped window onto one animated idea, cut by the rule */
 .screens { border-top: 2px solid var(--rule); padding-top: 28px; }
 .screens .h2 { grid-column: 1 / 10; }
-.screens__intro { grid-column: 10 / 13; align-self: end; margin: 0; color: var(--ink-2); font-size: 15px; }
 .shots { margin-top: clamp(40px, 5vw, 72px); align-items: end; }
 .shot { grid-column: span 3; }
 .cut { position: relative; border-bottom: 2px solid var(--rule); display: flex; justify-content: center; }
@@ -238,7 +235,6 @@ footer a:hover { color: #b9adff; }
   .how__stage { grid-column: 1 / -1; height: 56vh; top: 0; background: var(--paper); z-index: 1; padding: 12px 0; }
   .how__steps { grid-column: 1 / -1; grid-row: 2; }
   .step { min-height: 60vh; }
-  .screens__intro { grid-column: 1 / -1; margin-top: 16px; }
   .shots { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: var(--g); margin-left: calc(var(--g) * -1); margin-right: calc(var(--g) * -1); padding: 0 var(--g) 8px; scrollbar-width: none; }
   .shot { flex: 0 0 78%; scroll-snap-align: center; }
   .dev { --h: 360px !important; }
@@ -289,7 +285,6 @@ Lumen
         <div class="anno anno--l" style="left:2%;top:21%;--len:52px"><span>Say it</span></div>
         <div class="anno" style="right:0;top:46%;--len:44px;--o:-1"><span><b>Remembered</b></span></div>
         <div class="anno anno--l" style="left:6%;top:73%;--len:72px"><span>Turned into <b>a plan</b></span></div>
-        <figcaption class="figcap"><b>Fig. 1</b>&nbsp;&nbsp;One thought, held in place. Move your cursor: it is the light.</figcaption>
       </figure>
     </div>
   </section>
@@ -324,7 +319,6 @@ Lumen
   <section class="screens wrap" id="screens">
     <div class="grid">
       <h2 class="h2">Everything you meant to do, finally in one place.</h2>
-      <p class="screens__intro">Four things Lumen does for you, every day.</p>
     </div>
     <div class="grid shots">
       <article class="shot">
