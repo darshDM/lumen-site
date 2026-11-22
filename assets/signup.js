@@ -1,6 +1,6 @@
 /*
- * Early-access forms. Set data-endpoint on a <form class="signup"> to a form service URL
- * (Formspree, Tally, Getform…) and it posts there. With no endpoint it opens an email instead.
+ * Early-access forms. They post to the Google Apps Script URL in <meta name="signup-endpoint">
+ * (setup: tools/SIGNUP-SHEET.md). With no URL set, the button opens an email instead.
  */
 (function () {
   'use strict';
@@ -11,7 +11,7 @@
     const input = form.querySelector('input[type="email"]');
     const button = form.querySelector('button');
     const note = form.querySelector('.signup__note');
-    const idle = note ? note.textContent : '';
+    const idle = note ? note.innerHTML : '';
     const say = (text, kind) => {
       if (!note) return;
       note.textContent = text;
@@ -20,7 +20,8 @@
     input.addEventListener('input', () => {
       if (form.dataset.state === 'error') {
         form.dataset.state = '';
-        say(idle);
+        note.innerHTML = idle;
+        note.dataset.kind = '';
       }
     });
     form.addEventListener('submit', async (e) => {
@@ -32,7 +33,8 @@
         input.focus();
         return;
       }
-      const endpoint = form.dataset.endpoint;
+      const meta = document.querySelector('meta[name="signup-endpoint"]');
+      const endpoint = form.dataset.endpoint || (meta && meta.content.trim());
       if (!endpoint) {
         const subject = encodeURIComponent('Lumen early access');
         const body = encodeURIComponent(`Please add ${email} to the Lumen early-access list.`);
@@ -45,12 +47,17 @@
       button.disabled = true;
       say('Adding you…');
       try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
+        // A form-encoded POST is a "simple" request, so Apps Script needs no CORS preflight.
+        const trap = form.querySelector('input[name="website"]');
+        const body = new URLSearchParams({ email, source: form.dataset.source || '', website: trap ? trap.value : '' });
+        const res = await fetch(endpoint, { method: 'POST', body, redirect: 'follow' });
         if (!res.ok) throw new Error(String(res.status));
+        const data = await res.json().catch(() => ({ ok: true }));
+        if (data.ok === false) {
+          form.dataset.state = 'error';
+          say('That email looks incomplete. Check it and try again.', 'error');
+          return;
+        }
         form.dataset.state = 'done';
         input.value = '';
         say("You're on the list. One email when Lumen opens.", 'ok');

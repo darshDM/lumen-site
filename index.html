@@ -6,6 +6,8 @@
 <title>Lumen</title>
 <meta name="description" content="Organize your day, your month, your life. Talk to Lumen by text or voice; it remembers what matters and turns it into goals, habits and a plan for today. Coming soon to Android.">
 <meta name="theme-color" content="#ffffff">
+<!-- Early-access signups: paste the Apps Script web app URL here (see tools/SIGNUP-SHEET.md). -->
+<meta name="signup-endpoint" content="">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Lumen: organize your day, your month, your life">
 <meta property="og:description" content="Say what's on your mind. Lumen remembers what matters and turns it into goals, habits and a plan for today. Coming soon to Android.">
@@ -88,6 +90,7 @@ html { scrollbar-color: var(--ink) var(--paper); }
 .lede { font-size: clamp(18px, 1.5vw, 21px); line-height: 1.5; max-width: 34ch; margin: 0 0 36px; color: var(--ink); }
 
 .signup { max-width: 520px; }
+.signup .trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .signup__row { display: flex; border: 2px solid var(--ink); }
 .signup input {
   flex: 1;
@@ -272,13 +275,13 @@ Lumen
       <div class="hero__text">
         <h1><span>Organize your day.</span><span>Then your month.</span><span>Then your life.</span></h1>
         <p class="lede">Say what's on your mind, by text or voice. Lumen remembers what matters and turns it into goals, habits and a plan for today.</p>
-        <form class="signup" data-endpoint="" novalidate>
+        <form class="signup" data-source="top" novalidate><input class="trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
           <label class="signup__row">
             <span class="visually-hidden" style="position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden">Email address</span>
             <input type="email" name="email" placeholder="you@email.com" autocomplete="email" required>
             <button class="btn" type="submit">Get early access</button>
           </label>
-          <p class="signup__note" aria-live="polite">Coming soon to Android. One email when it opens.</p>
+          <p class="signup__note" aria-live="polite">Coming soon to Android. One email when it opens. <a href="privacy.html#signup">How we use it</a></p>
         </form>
       </div>
       <figure class="hero__fig" id="heroFig" aria-hidden="true">
@@ -364,7 +367,7 @@ Lumen
     <canvas id="closeCanvas" aria-hidden="true"></canvas>
     <div class="wrap grid">
       <h2>Clear your head. Start with today.</h2>
-      <form class="signup" data-endpoint="" novalidate>
+      <form class="signup" data-source="bottom" novalidate><input class="trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <label class="signup__row">
           <span style="position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden">Email address</span>
           <input type="email" name="email" placeholder="you@email.com" autocomplete="email" required>

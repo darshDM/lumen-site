@@ -37,8 +37,9 @@ to your own words.
 - App surfaces to show on the site: a conversation (text + voice, a reading under a message, a goal plan card),
   Today (goal rings, habits due, the quiet goal, open tasks), Insights notes, Plan (goals, habits, alarms, to-dos).
 - The app is not public yet. The site's main action is "Coming soon" + early-access email signup.
-- Static site, so signup goes through a third-party form endpoint (Formspree, Google Forms, Tally, or Netlify
-  Forms if hosted there). Not chosen yet.
+- Hosted on GitHub Pages (darshDM/lumen-site). Signups go to a Google Sheet the owner controls, through a
+  Google Apps Script web app (`tools/SIGNUP-SHEET.md`); the URL lives in `index.html`'s `signup-endpoint` meta.
+  Chosen 2026-11-22.
 
 ## Capabilities and Constraints
 
