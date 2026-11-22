@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800;900&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared/phones.css">
 <style>
 :root {
   --paper: #ffffff;
@@ -69,17 +68,18 @@ html { scrollbar-color: var(--ink) var(--paper); }
 
 /* Hero */
 .hero { padding-block: clamp(40px, 6vw, 96px) 0; }
-.hero__text { grid-column: 1 / 7; align-self: start; padding-top: clamp(0px, 2vw, 32px); }
+.hero__text { grid-column: 1 / 8; align-self: start; padding-top: clamp(0px, 2vw, 32px); }
 .hero h1 {
   font-weight: 800;
-  font-size: clamp(52px, 7.4vw, 6rem);
-  line-height: 0.92;
+  font-size: clamp(44px, 5.5vw, 5.4rem);
+  line-height: 0.95;
   letter-spacing: -0.045em;
   margin: 0 0 clamp(24px, 3vw, 40px);
   text-wrap: balance;
 }
-.hero h1 span { display: block; animation: rise 1.1s var(--ease) both; }
-.hero h1 span:nth-child(2) { animation-delay: 0.08s; color: var(--violet); }
+.hero h1 span { display: block; white-space: nowrap; animation: rise 1.1s var(--ease) both; }
+.hero h1 span:nth-child(2) { animation-delay: 0.08s; }
+.hero h1 span:nth-child(3) { animation-delay: 0.16s; color: var(--violet); }
 @keyframes rise { from { transform: translateY(0.35em); opacity: 0; filter: blur(6px); } }
 .lede { font-size: clamp(18px, 1.5vw, 21px); line-height: 1.5; max-width: 34ch; margin: 0 0 36px; color: var(--ink); }
 
@@ -103,7 +103,7 @@ html { scrollbar-color: var(--ink) var(--paper); }
 .signup__note[data-kind='ok'] { color: var(--violet); }
 .signup[data-state='error'] .signup__row { border-color: #b4232a; }
 
-.hero__fig { grid-column: 7 / 13; position: relative; aspect-ratio: 1 / 1.02; margin-top: -24px; }
+.hero__fig { grid-column: 8 / 13; position: relative; aspect-ratio: 1 / 1.02; margin-top: -24px; }
 .hero__fig canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .anno { position: absolute; font: 500 12px/1.35 var(--mono); color: var(--ink); display: flex; align-items: center; gap: 10px; white-space: nowrap; pointer-events: none; }
 .anno span { background: var(--paper); padding: 3px 7px; }
@@ -147,34 +147,44 @@ html { scrollbar-color: var(--ink) var(--paper); }
 .step p { margin: 0; font-size: 18px; max-width: 32ch; color: var(--ink-2); transition: color 0.4s var(--ease); }
 .step.on p { color: var(--ink); }
 
-/* Screens */
+/* Feature plates: a phone-shaped window onto one animated idea, cut by the rule */
 .screens { border-top: 2px solid var(--rule); padding-top: 28px; }
 .screens .h2 { grid-column: 1 / 10; }
 .screens__intro { grid-column: 10 / 13; align-self: end; margin: 0; color: var(--ink-2); font-size: 15px; }
 .shots { margin-top: clamp(40px, 5vw, 72px); align-items: end; }
 .shot { grid-column: span 3; }
-.shot .phone-crop { --crop-h: 33em; justify-content: center; border-bottom: 2px solid var(--rule); position: relative; }
-.shot .phone { --s: 0.98; }
-.shot:nth-child(1) .phone-crop { --crop-h: 40em; }
-.shot:nth-child(2) .phone-crop { --crop-h: 34em; }
-.shot:nth-child(3) .phone-crop { --crop-h: 44em; }
-.shot:nth-child(4) .phone-crop { --crop-h: 30em; }
-.shot .phone-crop::before {
+.cut { position: relative; border-bottom: 2px solid var(--rule); display: flex; justify-content: center; }
+.cut::before {
   content: '';
   position: absolute;
-  inset: 22% -8% 0;
+  inset: 30% -6% 0;
   background-image: radial-gradient(var(--violet) 1.1px, transparent 1.3px);
   background-size: 7px 7px;
   -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 85%);
   mask-image: linear-gradient(to top, #000 0%, transparent 85%);
-  opacity: 0.55;
+  opacity: 0.5;
 }
-.shot .phone { transition: transform 1.2s var(--ease); }
-.js .shot:not(.in) .phone { transform: translateY(14%); }
-.shot > h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; margin: 18px 0 6px; }
-.shot > h3 small { font: 500 12px/1 var(--mono); color: var(--violet); letter-spacing: 0; display: block; margin-bottom: 10px; }
+.dev {
+  position: relative;
+  width: min(100%, 290px);
+  height: var(--h, 380px);
+  background: #121316;
+  border: 8px solid #0a0a0c;
+  border-bottom: 0;
+  border-radius: 42px 42px 0 0;
+  overflow: hidden;
+  transition: transform 1.2s var(--ease);
+}
+.shot:nth-child(1) .dev { --h: 400px; }
+.shot:nth-child(2) .dev { --h: 340px; }
+.shot:nth-child(3) .dev { --h: 440px; }
+.shot:nth-child(4) .dev { --h: 310px; }
+.js .shot:not(.in) .dev { transform: translateY(14%); }
+.dev canvas { position: absolute; left: 0; right: 0; top: 52px; bottom: 0; width: 100%; height: calc(100% - 52px); }
+.dev .bar { position: absolute; top: 18px; left: 22px; right: 22px; display: flex; justify-content: space-between; align-items: center; font: 500 11px/1 var(--mono); color: #a0a1aa; letter-spacing: 0.02em; }
+.dev .bar i { width: 44px; height: 6px; border-radius: 3px; background: #2c2d33; }
+.shot > h3 { font-size: 24px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; margin: 20px 0 8px; }
 .shot > p { margin: 0; color: var(--ink-2); font-size: 15px; max-width: 30ch; }
-.sample { font: 400 12px/1.4 var(--mono); color: var(--ink-2); margin-top: 28px; }
 
 /* Privacy */
 .priv { border-top: 2px solid var(--rule); margin-top: clamp(80px, 10vw, 140px); padding-top: 28px; }
@@ -224,7 +234,7 @@ footer a:hover { color: #b9adff; }
   .screens__intro { grid-column: 1 / -1; margin-top: 16px; }
   .shots { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: var(--g); margin-left: calc(var(--g) * -1); margin-right: calc(var(--g) * -1); padding: 0 var(--g) 8px; scrollbar-width: none; }
   .shot { flex: 0 0 78%; scroll-snap-align: center; }
-  .shot .phone { --s: 0.9; }
+  .dev { --h: 360px !important; }
   .priv ul, .priv__links { grid-column: 1 / -1; margin-top: 24px; }
   .close h2, .close .signup { grid-column: 1 / -1; }
   .close canvas { width: 100%; opacity: 0.45; }
@@ -232,6 +242,8 @@ footer a:hover { color: #b9adff; }
   footer nav { margin-top: 10px; }
 }
 @media (max-width: 520px) {
+  .hero h1 { font-size: clamp(36px, 10.4vw, 52px); }
+  .hero h1 span { white-space: normal; }
   .facts .grid > div { grid-column: 1 / -1; }
   .signup .btn { padding: 0 14px; font-size: 14px; }
 }
@@ -243,10 +255,9 @@ footer a:hover { color: #b9adff; }
 <header class="mast">
   <div class="wrap grid">
     <a class="logo" href="#top" aria-label="Lumen home">
-      <svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="10" fill="#0c0c10"/><circle cx="8" cy="8" r="3.4" fill="#fff"/></svg>
-      Lumen
+Lumen
     </a>
-    <nav aria-label="Sections"><a href="#how">How it works</a><a href="#screens">The app</a><a href="#privacy">Privacy</a></nav>
+    <nav aria-label="Sections"><a href="#how">How it works</a><a href="#screens">What it does</a><a href="#privacy">Privacy</a></nav>
     <div class="mast__cta"><span>Android · coming soon</span><a class="btn" href="#join">Get early access</a></div>
   </div>
 </header>
@@ -255,8 +266,8 @@ footer a:hover { color: #b9adff; }
   <section class="hero wrap">
     <div class="grid">
       <div class="hero__text">
-        <h1><span>Think out loud.</span><span>Lumen remembers.</span></h1>
-        <p class="lede">Talk to Lumen by text or voice. It keeps what matters, links it to your goals, and turns it into a plan when you ask.</p>
+        <h1><span>Organize your day.</span><span>Then your month.</span><span>Then your life.</span></h1>
+        <p class="lede">Say what's on your mind, by text or voice. Lumen remembers what matters and turns it into goals, habits and a plan for today.</p>
         <form class="signup" data-endpoint="" novalidate>
           <label class="signup__row">
             <span class="visually-hidden" style="position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden">Email address</span>
@@ -268,66 +279,66 @@ footer a:hover { color: #b9adff; }
       </div>
       <figure class="hero__fig" id="heroFig" aria-hidden="true">
         <canvas id="heroCanvas"></canvas>
-        <div class="anno anno--l" style="left:2%;top:21%;--len:52px"><span>Text or voice</span></div>
-        <div class="anno" style="right:0;top:46%;--len:44px;--o:-1"><span><b>Kept</b> as a memory</span></div>
-        <div class="anno anno--l" style="left:6%;top:73%;--len:72px"><span>Linked to <b>Ship the beta</b></span></div>
-        <figcaption class="figcap"><b>Fig. 1</b>&nbsp;&nbsp;A thought, read. Move your cursor: it is the light.</figcaption>
+        <div class="anno anno--l" style="left:2%;top:21%;--len:52px"><span>Say it</span></div>
+        <div class="anno" style="right:0;top:46%;--len:44px;--o:-1"><span><b>Remembered</b></span></div>
+        <div class="anno anno--l" style="left:6%;top:73%;--len:72px"><span>Turned into <b>a plan</b></span></div>
+        <figcaption class="figcap"><b>Fig. 1</b>&nbsp;&nbsp;One thought, held in place. Move your cursor: it is the light.</figcaption>
       </figure>
     </div>
   </section>
 
   <section class="facts wrap" aria-label="What Lumen does">
     <div class="grid">
-      <div><h3>Talk</h3><p>A conversation, typed or spoken. Half-formed thoughts are fine.</p></div>
-      <div><h3>Remember</h3><p>Lumen reads every message once and keeps what matters about you.</p></div>
-      <div><h3>Plan</h3><p>Goals with steps, habits, tasks and alarms, made from the chat when you ask.</p></div>
-      <div><h3>Notice</h3><p>Notes on what it sees, each pointing back to your own words.</p></div>
+      <div><h3>Clear your head</h3><p>Everything you're carrying, parked in one place.</p></div>
+      <div><h3>Know what's next</h3><p>The goals, habits and tasks that matter today, nothing else.</p></div>
+      <div><h3>Keep your word</h3><p>Lumen follows up on what you said you'd do.</p></div>
+      <div><h3>Grow on purpose</h3><p>Month by month, see which goals are moving and which have gone quiet.</p></div>
     </div>
   </section>
 
   <section class="how wrap" id="how">
-    <div class="how__head grid"><h2>From a passing thought to a plan you keep.</h2></div>
+    <div class="how__head grid"><h2>Get it out of your head. Get it done.</h2></div>
     <div class="how__body grid">
       <div class="how__stage">
         <div class="frame">
           <canvas id="howCanvas" aria-hidden="true"></canvas>
           <div class="tag"><b>Fig. 2</b>&nbsp;&nbsp;<span id="howTag">A thought</span></div>
-          <div class="meter" aria-hidden="true"><span class="on">Say it</span><span>It's kept</span><span>It's a plan</span></div>
+          <div class="meter" aria-hidden="true"><span class="on">Say it</span><span>Park it</span><span>Do it</span></div>
         </div>
       </div>
       <div class="how__steps">
-        <div class="step on" data-tag="A thought"><h3>Say it.</h3><p>Type or talk, mid-walk or late at night. Lumen replies, and reads the message once to understand it.</p></div>
-        <div class="step" data-tag="A memory"><h3>It's kept.</h3><p>What matters becomes a memory: how you work, what's going on, which goal it touches. Next week, Lumen still knows.</p></div>
-        <div class="step" data-tag="A plan"><h3>It becomes a plan.</h3><p>Say "make it a goal" and Lumen drafts the steps. Habits, tasks and alarms on your phone's clock work the same way.</p></div>
+        <div class="step on" data-tag="A loose thought"><h3>Say it.</h3><p>Type or talk, mid-walk or at midnight. Half-formed is fine. Lumen replies and works out what you meant.</p></div>
+        <div class="step" data-tag="Parked"><h3>Park it.</h3><p>Every open loop lands in Lumen and stays there: the call you owe, the idea you can't drop. It remembers, so you don't have to.</p></div>
+        <div class="step" data-tag="A plan"><h3>Do it.</h3><p>Say "make it a goal" and the steps appear. Habits, tasks and alarms on your phone's clock work the same way.</p></div>
       </div>
     </div>
   </section>
 
   <section class="screens wrap" id="screens">
     <div class="grid">
-      <h2 class="h2">One conversation, four places it shows up.</h2>
-      <p class="screens__intro">The app on Android. Screens show sample content.</p>
+      <h2 class="h2">Everything you meant to do, finally in one place.</h2>
+      <p class="screens__intro">Four things Lumen does for you, every day.</p>
     </div>
     <div class="grid shots">
       <article class="shot">
-        <div class="phone-crop"><div class="phone" data-screen="chat"></div></div>
-        <h3><small>Chats</small>Talk it through</h3>
-        <p>Every reply knows what you said before. A plan arrives as a card you can add.</p>
+        <div class="cut"><div class="dev"><div class="bar"><span>Voice → words</span><i></i></div><canvas data-plate="talk" aria-hidden="true"></canvas></div></div>
+        <h3>Talk it out.</h3>
+        <p>Type or speak. Ramble if you need to. Lumen listens, replies, and keeps what matters.</p>
       </article>
       <article class="shot">
-        <div class="phone-crop"><div class="phone" data-screen="today"></div></div>
-        <h3><small>Today</small>Your day, from your words</h3>
-        <p>Your top three goals as rings, with the habits and tasks that move them.</p>
+        <div class="cut"><div class="dev"><div class="bar"><span>Open loops</span><i></i></div><canvas data-plate="loops" aria-hidden="true"></canvas></div></div>
+        <h3>Park your open loops.</h3>
+        <p>The call you owe, the decision you keep dodging. Drop it in Lumen and it follows up.</p>
       </article>
       <article class="shot">
-        <div class="phone-crop"><div class="phone" data-screen="insights"></div></div>
-        <h3><small>Insights</small>Honest notes</h3>
-        <p>What Lumen noticed, straight feedback, and one thing to try this week.</p>
+        <div class="cut"><div class="dev"><div class="bar"><span>Today</span><i></i></div><canvas data-plate="today" aria-hidden="true"></canvas></div></div>
+        <h3>Organize your day.</h3>
+        <p>Your top goals as rings, with the habits and tasks that move them. One look, and you know.</p>
       </article>
       <article class="shot">
-        <div class="phone-crop"><div class="phone" data-screen="plan"></div></div>
-        <h3><small>Plan</small>Everything in one place</h3>
-        <p>Goals, repeating habits, follow-ups and alarms. Change any of it by asking.</p>
+        <div class="cut"><div class="dev"><div class="bar"><span>Insights</span><i></i></div><canvas data-plate="patterns" aria-hidden="true"></canvas></div></div>
+        <h3>See your patterns.</h3>
+        <p>Honest notes on what you keep doing, each traced back to your own words.</p>
       </article>
     </div>
   </section>
@@ -348,7 +359,7 @@ footer a:hover { color: #b9adff; }
   <section class="close" id="join">
     <canvas id="closeCanvas" aria-hidden="true"></canvas>
     <div class="wrap grid">
-      <h2>Be first when it opens.</h2>
+      <h2>Clear your head. Start with today.</h2>
       <form class="signup" data-endpoint="" novalidate>
         <label class="signup__row">
           <span style="position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden">Email address</span>
@@ -369,7 +380,6 @@ footer a:hover { color: #b9adff; }
 </footer>
 
 <script src="shared/halftone.js"></script>
-<script src="shared/phones.js"></script>
 <script src="shared/signup.js"></script>
 <script>
 (function () {
@@ -452,9 +462,86 @@ footer a:hover { color: #b9adff; }
     },
   });
 
-  // Phones rise to the rule as they arrive.
+  // Feature plates. Each loops a few seconds of one idea, drawn in the app's own dark.
+  const ease = (x) => 1 - Math.pow(1 - clamp(x), 3);
+  const loopT = (t, len) => (t % len) / len;
+  const P = {
+    // A voice wave that settles into lines of words.
+    talk: (u, v, t, s) => {
+      const ph = loopT(t, 7);
+      const m = smooth(0.34, 0.52, ph) * (1 - smooth(0.9, 0.99, ph));
+      const amp = 0.03 + 0.15 * Math.abs(Math.sin(u * 15 + t * 3.2) * Math.sin(u * 4.6 - t * 1.4));
+      const wave = u > 0.08 && u < 0.92 && Math.abs(v - 0.42) < amp ? 1 : 0;
+      const L = [0.82, 0.7, 0.78, 0.46];
+      let lines = 0;
+      for (let i = 0; i < 4; i++) {
+        const y = 0.26 + i * 0.1;
+        const grow = ease((ph - 0.36 - i * 0.07) / 0.18);
+        if (Math.abs(v - y) < 0.022 && u > 0.1 && u < 0.1 + L[i] * grow) lines = 0.8;
+      }
+      return wave * (1 - m) + lines * m;
+    },
+    // Scattered loops drift in and settle into a tidy list.
+    loops: (u, v, t, s) => {
+      const ph = loopT(t, 8);
+      const k = ease((ph - 0.12) / 0.4) * (1 - smooth(0.9, 1, ph));
+      let val = 0;
+      for (let i = 0; i < 5; i++) {
+        const sx = 0.2 + 0.6 * noise(i * 3.1, 0.5, t * 0.15), sy = 0.15 + 0.7 * noise(0.5, i * 2.7, t * 0.15);
+        const ki = clamp(k * 1.25 - i * 0.06);
+        const x = sx + (0.14 - sx) * ki, y = sy + (0.12 + i * 0.15 - sy) * ki;
+        const d = Math.hypot((u - x) * s.aspect, v - y);
+        if (d > 0.035 && d < 0.058) val = 1;
+        if (Math.abs(v - y) < 0.016 && u > x + 0.1 && u < x + 0.1 + (0.62 - i * 0.06) * smooth(0.75, 1, ki)) val = Math.max(val, 0.5);
+      }
+      return val;
+    },
+    // Three goal rings in one colour, as the app draws them, and the day's list below.
+    today: (u, v, t, s) => {
+      const ph = loopT(t, 7);
+      const fill = ease(ph / 0.45) * (1 - smooth(0.9, 1, ph));
+      const goals = [0.4, 0.67, 0.2];
+      for (let i = 0; i < 3; i++) {
+        const cx = 0.2 + i * 0.3, cy = 0.17;
+        const dx = (u - cx) * s.aspect, dy = v - cy, d = Math.hypot(dx, dy);
+        if (d > 0.075 && d < 0.105) {
+          const a = (Math.atan2(dx, -dy) + Math.PI * 2) % (Math.PI * 2);
+          return a < goals[i] * fill * Math.PI * 2 ? 1 : 0.14;
+        }
+      }
+      for (let i = 0; i < 4; i++) {
+        const y = 0.42 + i * 0.13;
+        const bx = (u - 0.135) * s.aspect, by = v - y;
+        if (Math.abs(bx) < 0.034 && Math.abs(by) < 0.034) {
+          const done = i < 2 && ph > 0.3 + i * 0.12 && ph < 0.92;
+          return done || Math.abs(bx) > 0.02 || Math.abs(by) > 0.02 ? 1 : 0;
+        }
+        if (Math.abs(v - y) < 0.015 && u > 0.24 && u < 0.24 + [0.5, 0.62, 0.4, 0.55][i]) return 0.38;
+      }
+      return 0;
+    },
+    // Quiet noise, and one pattern that keeps lighting up.
+    dim: (u, v, t, s) => clamp((noise(u * 9 * s.aspect, v * 9, t * 0.2) - 0.45) * 1.6) * 0.5,
+    pattern: (u, v, t, s) => {
+      const pts = [[0.25, 0.2], [0.42, 0.36], [0.58, 0.5], [0.72, 0.68]];
+      let val = 0;
+      pts.forEach(([x, y], i) => {
+        const on = 0.5 + 0.5 * Math.sin(t * 2 - i * 0.9);
+        const d = Math.hypot((u - x) * s.aspect, v - y);
+        val = Math.max(val, smooth(0.11, 0.0, d) * (0.45 + 0.55 * on));
+      });
+      return val;
+    },
+  };
+  document.querySelectorAll('canvas[data-plate]').forEach((c) => {
+    const kind = c.dataset.plate;
+    const plates = kind === 'patterns'
+      ? [{ color: '#4a4b55', field: P.dim }, { color: '#a896ff', field: P.pattern }]
+      : [{ color: '#f2f2f4', field: P[kind] }];
+    H.mount(c, { spacing: kind === 'today' ? 5 : 6, angle: 0, shape: kind === 'patterns' ? 'circle' : 'square', pointer: false, fps: 30, plates });
+  });
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.25 });
-  document.querySelectorAll('.shot').forEach((el, i) => { el.style.transitionDelay = i * 80 + 'ms'; el.querySelector('.phone').style.transitionDelay = i * 90 + 'ms'; io.observe(el); });
+  document.querySelectorAll('.shot').forEach((el, i) => { el.querySelector('.dev').style.transitionDelay = i * 90 + 'ms'; io.observe(el); });
 })();
 </script>
 </body>
